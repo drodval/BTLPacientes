@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
+<!-- 2015-12-03T15:58:27 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="1" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="81319791-70fe-44c5-b531-b764e428f463">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<subDataset name="Dataset1" uuid="5a5b2a62-eb0c-4773-b671-803edfc97d1c">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="Field_1" class="java.lang.String"/>
+	<field name="Field_2" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="82" splitType="Stretch">
+			<break>
+				<reportElement x="0" y="23" width="100" height="1" uuid="dd515d26-ddcf-4f31-8da6-669fc109c084"/>
+			</break>
+			<staticText>
+				<reportElement x="160" y="10" width="305" height="30" uuid="7173b693-ec27-4708-ab8e-7303279e4519"/>
+				<textElement>
+					<font fontName="Monospaced" size="22"/>
+				</textElement>
+				<text><![CDATA[Static Text]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="160" y="10" width="305" height="30" uuid="26cb1b94-a7e7-4c95-b4c8-274fa42d7642"/>
+				<textElement>
+					<font fontName="Monospaced" size="22"/>
+				</textElement>
+				<text><![CDATA[Static Text]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

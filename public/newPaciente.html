@@ -1,0 +1,665 @@
+<div ng-controller="addPacienteCtrl" data-ng-init="init()">
+    <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="updatePaciente()">
+        <span class="glyphicon glyphicon-ok"></span>
+    </button>    
+    <hr>
+    <!--    capas de información de error o acierto updateando info de pacientes-->
+    <div class="col-md-10 margin-bottom-15">
+        <div class="alert alert-danger fade in" ng-show="paciente.showAlerta">
+            <strong>ALERTA!</strong> 
+            <div class="row">
+                <textarea class="form-control" rows="2" id="alertas" ng-model="paciente.alerta"></textarea>   
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-danger fade in" ng-show="errorUpdatePaciente">
+        <a class="close" ng-click="showErrorUpdatePaciente()">&times;</a>
+        <strong>Error!</strong> A problem has been occurred while submitting your data.
+    </div>
+    <div class="alert alert-success fade in" ng-show="okUpdatePaciente">
+        <a class="close" ng-click="showOkUpdatePaciente()">&times;</a>
+        <strong>Success!</strong> Update has been done.
+    </div>
+    
+    <div>
+        
+        <div class="row">
+            <div class="col-md-3 margin-bottom-15">
+                <label>Nombre</label>
+                <input type="text" class="form-control" id="firstName" ng-model="paciente.nombre"><!--value="{{value[0].NOMBRE}}">-->
+            </div>
+            <div class="col-md-2 margin-bottom-15">
+                <label for="lastName" class="control-label">Apellidos</label>
+                <input type="text" class="form-control" id="lastName" ng-model="paciente.apellidos">                 
+            </div>
+            <div class="col-md-2 margin-bottom-15">
+                <label>DNI</label>
+                <input type="text" class="form-control" id="lastName" ng-model="paciente.dni">                 
+            </div>            
+            <div class="col-md-2 margin-bottom-15">
+                <label>CIP</label>
+                <input type="text" class="form-control" id="lastName" ng-model="paciente.cip">                 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 margin-bottom-15">
+                <label>Fecha de entrada real</label><br>
+                <ng-datepicker ng-model="paciente.entrada" view-format="D MMMM YYYY" first-week-day-sunday="false" locale="es"></ng-datepicker>
+            </div>
+        
+            <div class="col-md-2 margin-bottom-15">
+                    <label>Fecha visita de ingreso</label><br>
+                    <ng-datepicker ng-model="paciente.ingreso" view-format="D MMMM YYYY" first-week-day-sunday="false" locale="es"></ng-datepicker>
+            </div>
+       
+            <div class="col-md-5 margin-bottom-15">
+                <label>Visita de ingreso</label>
+                <textarea class="form-control" rows="3" id="notes" ng-model="paciente.notasingreso"></textarea>
+            </div>
+               
+       </div>
+        
+    </div>
+    
+    <ul class="nav nav-tabs" role="tablist" id="templatemo-tabs">
+        <!--<li class="active"><a href="" ng-click="showTab(1)" role="tab" data-toggle="tab">Datos</a></li>-->
+        <li><a href="" ng-click="showTab(1)" role="tab" data-toggle="tab">Ingreso</a></li>
+        <li><a href="" ng-click="showTab(2)" role="tab" data-toggle="tab">Datos</a></li>
+        <li><a href="" ng-click="showTab(3)" role="tab" data-toggle="tab">Contacto</a></li>
+        <!--<li><a href="" ng-click="showTab(3)" role="tab" data-toggle="tab">Ingreso</a></li>-->
+        <li><a href="" ng-click="showTab(4)" role="tab" data-toggle="tab">Vacunas</a></li>
+        <li><a href="" ng-click="showTab(5)" role="tab" data-toggle="tab">Entradas/Salidas</a></li>
+        <li><a href="" ng-click="showTab(6)" role="tab" data-toggle="tab">Visitas</a></li>
+        <li><a href="" ng-click="showTab(7)" role="tab" data-toggle="tab">Alertas</a></li>
+    </ul>
+
+    <div class="tab-content" ng-init="showMe=1">
+        <div class="tab-pane fade in active" id="HistoriaIngreso" ng-show="1===showMe">
+            <div class="tab-pane fade in active" id="HistoriaIngreso_">
+                <div class="col-md-11">
+
+                    <br><br>    
+                    <form role="form" id="templatemo-preferences-form_2">
+                        <div class="row">
+                            <div class="col-md-2 margin-bottom-15">
+                                <label>Médico</label>
+                            </div>
+                            <div class="col-md-8 margin-bottom-15">
+                                
+                                <select name="singleSelect" id="idMedico" ng-model="paciente.medico" class="col-md-10 margin-bottom-15">
+                                    
+                                    <option ng-repeat="medico in medicos" value="{{medico.ID}}" ng-selected="{{medico.ID}} === {{paciente.medico}}">{{medico.NOMBRE}} {{medico.APELLIDOS}} - {{medico.NUMERO_COLEGIADO}}</option>
+                                    
+                                </select><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 margin-bottom-15">
+                                <label >Situación familiar</label>
+                                <textarea class="form-control" rows="2" id="situacionFamiliar" ng-model="paciente.situacionFamiliar"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 margin-bottom-15">
+                                <label >Situación laboral</label>
+                                <textarea class="form-control" rows="2" id="situacionLaboral" ng-model="paciente.situacionLaboral"></textarea>
+                            </div>
+                        </div> 
+                        <div class="row">
+                            <div class="col-md-10 margin-bottom-15">
+                                <label >Situación social</label>
+                                <textarea class="form-control" rows="2" id="situacionSocial" ng-model="paciente.situacionSocial"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 margin-bottom-15">
+                                <label >Antecedentes personales medicoquirúrgicos</label>
+                                <textarea class="form-control" rows="2" id="antecedentesPersonales" ng-model="paciente.antecedentesPersonales"></textarea>
+                            </div>
+                        </div> 
+<hr>
+                        <div class="row">
+                            <div>
+                                <div class="col-md-2 margin-bottom-15">
+                                    <br><br>
+                                    <label> TBC </label>
+                                    <input type="checkbox" id="inlineCheckboxtd" value={{paciente.tbc}} ng-model="paciente.tbc" checked/> 
+                                </div>
+                                <div class="col-md-8 margin-bottom-15">
+                                    <label>TBC tratamiento y control</label>
+                                    <textarea class="form-control" rows="2" id="tratamientoTBC" ng-model="paciente.TBCTratamiento"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div>
+                                <div class="col-md-2 margin-bottom-15">
+                                    <br><br>
+                                    <label> HIV </label>
+                                    <input type="checkbox" id="inlineCheckboxtd" value={{paciente.hiv}} ng-model="paciente.hiv" checked/>
+                                    <br>
+
+                                </div>
+
+                                <div class="col-md-8 margin-bottom-15">
+                                    <label>HIV tratamiento y control</label>
+                                    <textarea class="form-control" rows="2" id="HIVtratemiento" ng-model="paciente.HIVTratamiento"></textarea>
+                                </div>
+                            </div>
+                        </div>
+<hr>
+                        <div class="row">
+                            <div>
+                                <div class="col-md-2 margin-bottom-15">
+                                    <label> HEPATITIS A </label>
+                                    <input type="checkbox" id="inlineCheckboxtd" value={{paciente.hepatitisA}} ng-model="paciente.hepatitisA" checked/>
+                                    <br>
+                                    <label> HEPATITIS B </label>
+                                    <input type="checkbox" id="inlineCheckboxtd" value={{paciente.hepatitisB}} ng-model="paciente.hepatitisB" checked/>
+                                    <br>
+                                    <label> HEPATITIS C </label>
+                                    <input type="checkbox" id="inlineCheckboxtd" value={{paciente.hepatitisC}} ng-model="paciente.hepatitisC" checked/>
+                                    <br>
+                                </div>
+                                <div class="col-md-8 margin-bottom-15">
+                                    <label>Hepatitis tratamiento y control</label>
+                                    <textarea class="form-control" rows="2" id="hepatitisTratamiento" ng-model="paciente.hepatitisTratamiento"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div>
+                                <div class="col-md-2 margin-bottom-15">
+                                    <br>
+                                    <label> Gonorrea </label>
+                                    <input type="checkbox" id="inlineCheckboxtd" value={{paciente.gonorrea}} ng-model="paciente.gonorrea" checked/>
+                                    <br>
+                                    <label> Sífilis </label>
+                                    <input type="checkbox" id="inlineCheckboxtd" value={{paciente.sifilis}} ng-model="paciente.sifilis" checked/>
+                                </div>
+
+                                <div class="col-md-8 margin-bottom-15">
+                                    <label>Enfermedades de transmisión sexual</label>
+                                    <textarea class="form-control" rows="2" id="enfermedadesTransmision" ng-model="paciente.enfermedadesTransmision"></textarea>
+                                </div>
+                            </div>
+                        </div>  
+<hr>
+                        <div class="row">
+                            <div class="col-md-2 margin-bottom-15">
+                                <br>
+                                <label>ENOLISMO</label>
+                                <input type="checkbox" id="inlineCheckboxtd" value={{paciente.enolismo}} ng-model="paciente.enolismo" checked/>
+                                <br>
+                                <label>TABAQUISMO</label>
+                                <input type="checkbox" id="inlineCheckboxtd" value={{paciente.tabaquismo}} ng-model="paciente.tabaquismo" checked/>
+                                <br>
+                                <label>ADVP</label>
+                                <input type="checkbox" id="inlineCheckboxtd" value={{paciente.advp}} ng-model="paciente.advp" checked/>
+
+                            </div>
+                            <div>
+                                <div class="col-md-4 margin-bottom-15">
+                                    <label>Tipo tóxico y tiempo</label>
+                                    <textarea class="form-control" rows="2" id="tipoToxico" ng-model="paciente.tipoToxico"></textarea>
+                                </div>
+                                <div class="col-md-4 margin-bottom-15">
+                                    <label>Droga fumada</label>
+                                    <textarea class="form-control" rows="2" id="drogaFumada" ng-model="paciente.drogaFumada"></textarea>
+                                </div>
+                                <div class="col-md-4 margin-bottom-15">
+                                    <label>Droga inhalada</label>
+                                    <textarea class="form-control" rows="2" id="drogaFumada" ng-model="paciente.drogaInhalada"></textarea>
+                                </div>
+                                <div class="col-md-4 margin-bottom-15">
+                                    <label>Otras drogas</label>
+                                    <textarea class="form-control" rows="2" id="otrasDrogas" ng-model="paciente.otrasDrogas"></textarea>
+                                </div>
+                            </div>
+                        </div>
+<hr>
+                        <div class="row">
+                            <div class="col-md-10 margin-bottom-15">
+                                <label>Situación general actual</label>
+                                <textarea class="form-control" rows="2" id="sitaucionActual" ng-model="paciente.situacionActual"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 margin-bottom-15">
+                                <label>Sistema músculo-esquelético</label>
+                                <textarea class="form-control" rows="2" id="sistemaMusculoEsqueletico" ng-model="paciente.sistemaMusculoEsqueletico"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 margin-bottom-15">
+                                <label>Esfera Oral</label>
+                                <textarea class="form-control" rows="2" id="esferaOral" ng-model="paciente.esferaOral"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">    
+                            <div class="col-md-10 margin-bottom-15">
+                                <label>Órganos Visuales</label>
+                                <textarea class="form-control" rows="2" id="organosVisuales" ng-model="paciente.organosVisuales"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 margin-bottom-15">
+                                <label>Aparato respiratorio</label>
+                                <textarea class="form-control" rows="2" id="aparatoRespiratorio" ng-model="paciente.aparatoRespiratorio"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 margin-bottom-15">
+                                <label>Sistema cardiocirculatorio</label>
+                                <textarea class="form-control" rows="2" id="sistemaCardioCirulatorio" ng-model="paciente.sistemaCardioCirculatorio"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">    
+                            <div class="col-md-10 margin-bottom-15">
+                                <label>Otros hallazgos clínicos</label>
+                                <textarea class="form-control" rows="2" id="otrosHallazgos" ng-model="paciente.otrosHallazgos"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 margin-bottom-15">
+                                <label>Pruebas complementarias</label>
+                                <textarea class="form-control" rows="2" id="pruebasComplementarias" ng-model="paciente.pruebasComplementarias"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 margin-bottom-15">
+                                <label>DIAGNÓSTICOS</label>
+                                <textarea class="form-control" rows="2" id="diagnosticos" ng-model="paciente.diagnosticos"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-11 margin-bottom-15">
+                                <label>RECOMENDACIONES</label>
+                            </div>
+                            <div>
+                                <div class="col-md-10 margin-bottom-15">
+                                    <label>Vacunas recomendadas</label>
+                                    <textarea class="form-control" rows="2" id="vacunasRecomendadas" ng-model="paciente.vacunasRecomendadas"></textarea>
+                                </div>
+                                <div class="col-md-10 margin-bottom-15">
+                                    <label>Tratamiento a realizar</label>
+                                    <textarea class="form-control" rows="2" id="tratamientoRealizar" ng-model="paciente.tratamientoRealizar"></textarea>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col-md-10 margin-bottom-15">
+                                    <label>Controles médicos a realizar</label>
+                                    <textarea class="form-control" rows="2" id="controlesMedicos" ng-model="paciente.controlesMedicos"></textarea>
+                                </div>
+                                <div class="col-md-10 margin-bottom-15">
+                                    <label>Derivación ambulatorio-hospital</label>
+                                    <textarea class="form-control" rows="2" id="derivacionAmbulatorioHospital" ng-model="paciente.derivacionAmbulatorioHospital"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    
+                </div>    
+            </div>
+        </div>
+        <div class="tab-pane fade in active" id="datos" ng-show="2===showMe">
+            
+            <div class="tab-pane fade in active" id="home">
+                <div class="col-md-11">
+                    
+                    <br><br>
+                    <form role="form" id="templatemo-preferences-form_1">
+                        <div class="row">
+                            <div class="col-md-3 margin-bottom-15">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" id="inlineCheckbox1" value={{paciente.activo}} ng-model="paciente.activo" checked/> 
+                                    <span ng-if="paciente.activo"> <font color="#00FF00" size="3"> ACTIVO </font></span>
+                                    <span ng-if="paciente.activo === false"> <font color="RED" size="3"> ACTIVO </font></span>
+                                </label>
+                            </div>
+                            <div class="col-md-5 margin-bottom-15">
+                                <label class="radio-inline">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" ng-model="paciente.hombre" ng-value=true > Hombre 
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" ng-model="paciente.mujer" ng-value=true> Mujer
+                                </label>
+                            </div>
+                            
+<!--                            <div class="col-md-3 margin-bottom-15">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" id="inlineCheckbox2" value={{paciente.hombre}} ng-model="paciente.hombre" checked/> 
+                                    <span ng-if="paciente.hombre"> <font color="#00FF00" size="3"> HOMBRE </font></span>
+                                    <span ng-if="paciente.hombre === false"> <font color="RED" size="3"> HOMBRE </font></span>
+                                </label>
+                            </div>
+                            <div class="col-md-3 margin-bottom-15">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" id="inlineCheckbox3" value={{paciente.mujer}} ng-model="paciente.mujer" checked/> 
+                                    <span ng-if="paciente.mujer"> <font color="#00FF00" size="3"> MUJER </font></span>
+                                    <span ng-if="paciente.mujer === false"> <font color="RED" size="3"> MUJER </font></span>
+                                </label>
+                            </div>-->
+                        </div>
+<!--                        <div class="row">
+                            <div class="col-md-3 margin-bottom-15">
+                                <label>Nombre</label>
+                                <input type="text" class="form-control" id="firstName" ng-model="paciente.nombre">value="{{value[0].NOMBRE}}">
+                            </div>
+                            <div class="col-md-5 margin-bottom-15">
+                                <label for="lastName" class="control-label">Apellidos</label>
+                                <input type="text" class="form-control" id="lastName" ng-model="paciente.apellidos">                 
+                            </div>
+                            <div class="col-md-2 margin-bottom-15">
+                                <label>DNI</label>
+                                <input type="text" class="form-control" id="lastName" ng-model="paciente.dni">                 
+                            </div>
+                        </div>-->
+                        <div class="row">
+<!--                            <div class="col-md-4 margin-bottom-15">
+                                <label>Fecha de entrada</label><br>
+                                <ng-datepicker ng-model="paciente.entrada" view-format="D MMMM YYYY" first-week-day-sunday="false" locale="es"></ng-datepicker>
+                            </div>-->
+                            <div class="col-md-2 margin-bottom-15">
+                                <label>Fecha nacimiento</label><br>
+                                <ng-datepicker ng-model="paciente.fechaNacimiento" view-format="D MMMM YYYY" first-week-day-sunday="false" locale="es"></ng-datepicker>
+                            </div>
+                            <div class="col-md-1 margin-bottom-15">
+                                <label>Edad</label><br>
+                                <input type="text" class="form-control" id="edad" disabled="true" ng-model="paciente.edad">
+                            </div>
+                            <div class="col-md-3 margin-bottom-15">
+                                    <label>País de origen</label>
+                                    <input type="text" class="form-control" id="bornPlace"  ng-model="paciente.lugarNacimiento">
+                            </div>
+                            <div class="col-md-3 margin-bottom-15">
+                                    <label>Nacionalidad</label>
+                                    <input type="text" class="form-control" id="bornPlace"  ng-model="paciente.nacionalidad">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 margin-bottom-15">
+                                <label>Domicilio</label>
+                                <input type="text" class="form-control" id="address" ng-model="paciente.domicilio"><!--value="{{value[0].NOMBRE}}">-->
+                            </div>
+                            <div class="col-md-3 margin-bottom-15">
+                                <label>Ciudad</label>
+                                <input type="text" class="form-control" id="city" ng-model="paciente.ciudad">                 
+                            </div>
+                            <div class="col-md-1 margin-bottom-15">
+                                <label>CP</label>
+                                <input type="text" class="form-control" id="city" ng-model="paciente.cp">                 
+                            </div>
+                            <div class="col-md-3 margin-bottom-15">
+                                <label>Provincia</label>
+                                <input type="text" class="form-control" id="provincia" ng-model="paciente.provincia">                 
+                            </div>
+                        </div>                        
+                        <div class="row">
+                            <div class="col-md-10 margin-bottom-15">
+                                <label>Notas</label>
+                                <textarea class="form-control" rows="3" id="notes" ng-model="paciente.notas"></textarea>
+                            </div>
+                        </div>    
+                    </form>
+                </div>    
+            </div>
+        </div>
+        <div class="tab-pane fade in active" id="Contacto" ng-show="3===showMe">
+            <div class="tab-pane fade in active" id="Contacto_">
+                <div class="col-md-11">
+
+                    <br><br>
+                    <form role="form" id="templatemo-preferences-form_2">
+                        <div class="row">
+                            <div class="col-md-5 margin-bottom-15">
+                                <label for="telf1" class="control-label">Teléfono-1</label>
+                                <input type="text" class="form-control" id="telf1" ng-model="paciente.telf1"><!--value="{{value[0].NOMBRE}}">-->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5 margin-bottom-15">
+                                <label for="telf2" class="control-label">Teléfono-2</label>
+                                <input type="text" class="form-control" id="telf2" ng-model="paciente.telf2">
+                            </div>
+                        </div>           
+                        <div class="row">
+                            <div class="col-md-10 margin-bottom-15">
+                                <label >Contacto familiar</label>
+                                <textarea class="form-control" rows="3" id="familyContact" ng-model="paciente.contactofamiliar"></textarea>
+                            </div>
+                        </div>    
+                    </form>
+                    
+                </div>    
+            </div>
+        </div>
+<!--        <div class="tab-pane fade in active" id="Ingreso" ng-show="3===showMe">
+            <div class="tab-pane fade in active" id="Ingreso_">-->
+<!--                <div class="col-md-11">
+
+                    <br><br>
+                    <form role="form" id="templatemo-preferences-form_3">
+                        <div class="row">
+                            <div class="col-md-6 margin-bottom-15">
+                                    <label>Fecha de ingreso</label><br>
+                                    <ng-datepicker ng-model="paciente.ingreso" view-format="D MMMM YYYY" first-week-day-sunday="false" locale="es"></ng-datepicker>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 margin-bottom-15">
+                                <label>Notas ingreso</label>
+                                <textarea class="form-control" rows="10" id="notes" ng-model="paciente.notasingreso"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                    
+                </div>    -->
+<!--            </div>
+        </div>-->
+        <div class="tab-pane fade in active" id="Vacunas" ng-show="4===showMe">
+            <div class="tab-pane fade in active" id="Vacunas_">
+                <div class="col-md-11">
+
+                    <br><br>
+                    <form role="form" id="templatemo-preferences-form_4">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label> Hepatitis B </label>
+                                <input type="checkbox" id="inlineCheckboxHepa" value={{paciente.hepatitisB}} ng-model="paciente.hepatitisB" checked/> 
+                            </div>
+                            <div class="col-md-7">
+                                <textarea class="form-control" rows="5" id="notes" ng-model="paciente.hepatitisComentario"></textarea>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label> TD </label>
+                                <input type="checkbox" id="inlineCheckboxtd" value={{paciente.td}} ng-model="paciente.td" checked/> 
+                            </div>
+                            <div class="col-md-7">
+                                <textarea class="form-control" rows="5" id="notes" ng-model="paciente.tdComentario"></textarea>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label> Neumonia </label>
+                                <input type="checkbox" id="inlineCheckboxneumo" value={{paciente.neumonia}} ng-model="paciente.neumonia" checked/> 
+                            </div>
+                            <div class="col-md-7">
+                                <textarea class="form-control" rows="5" id="notes" ng-model="paciente.neumoniaComentario"></textarea>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label> Antigripal </label>
+                                <input type="checkbox" id="inlineCheckboxgripal" value={{paciente.antigripal}} ng-model="paciente.antigripal" checked/> 
+                            </div>
+                            <div class="col-md-7">
+                                <textarea class="form-control" rows="5" id="notes" ng-model="paciente.antigripalComentario"></textarea>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                             <div class="col-md-10">
+                                <label> Otras Vacunas </label>
+                                <textarea class="form-control" rows="5" id="notes" ng-model="paciente.otrasVacunas"></textarea>
+                            </div>
+                        </div>
+                        <br>
+                    </form>
+                    
+                </div>    
+            </div>
+        </div>
+        <div class="tab-pane fade in active" id ="EntradasSalidas" ng-show="5===showMe">
+            <div class="tab-pane fade in active" id="EntradasSalidas_">
+                <div class="col-md-11">
+                    <br><br>
+                    <form role="form" id="templatemo-preferences-form_5">
+                        <div class="col-md-12 margin-bottom-15">
+                            <label>Registro entradas/salidas</label>
+                            <textarea class="form-control" rows="20" id="notes" ng-model="paciente.entradassalidas"></textarea>   
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade in active" id="entradas" ng-show="6===showMe">
+            <div class="table-responsive" ng-controller="visitasPacienteCtrl">
+                <div class="col-md-12 col-sm-12 margin-bottom-30">
+                    <br>
+                    <div>
+                        <a href="" ng-click="insertVisita(paciente.id)" data-toggle="modal" data-target="#visitaModal"><i class="fa fa-plus-square-o"> Nueva visita</i></a>
+                    </div>
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">VISITAS</div>
+                        <div class="panel-body">
+
+                            <table class="table table-striped" data-pagination="true" ng-model="visitas">
+                                <thead>
+                                    <tr>
+                                        <th>ID. VISITA</th>
+                                        <th>FECHA</th>
+                                        <th>DIAGNOSTICO</th>
+                                        <th></th>
+                                    </tr>
+                                </thead> 
+                                <tbody>
+                                    <tr ng-repeat="visita in visitas">
+                                        <td>{{visita.id}}</td>
+                                        <td>{{visita.fecha}}</td>
+                                        <td>{{visita.diagnostico}}</td>
+                                        <td>
+                                            <button type="button" data-toggle="modal" data-target="#visitaModal{{$index}}" class="btn btn-default" aria-label="Left Align" ng-click="getVisita(visita.id)">
+                                                <span class="glyphicon glyphicon-eye-open"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>  
+            </div>
+        </div>
+        <div class="tab-pane fade in active" id="Alertas" ng-show="7===showMe">
+            <div class="tab-pane fade in active" id="Ingreso_">
+                <div class="col-md-11">
+
+                    <br><br>
+                    <form role="form" id="templatemo-preferences-form_3">         
+                        <div class="col-md-3">
+                            <label> Activar aviso </label>
+                            <input type="checkbox" id="inlineCheckboxgripal" value={{paciente.showAlerta}} ng-model="paciente.showAlerta" checked/> 
+                        </div>
+                        <br><br>
+                        <div class="row">
+                            <div class="col-md-10 margin-bottom-15">
+                                <label>Alertas</label>
+                                <textarea class="form-control" rows="10" id="notes" ng-model="paciente.alerta"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                    
+                </div>    
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal -->
+    <div ng-controller="detallePacienteCtrl" id="modalAlerta">
+    <div class="modal fade" id="alertaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-show="paciente.showAlerta">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">ALERTAS</h4>
+                </div>
+                <div class="col-md-12">
+
+                    <form role="form" id="templatemo-lavisita-form_1">
+                        <div class="row">
+                                <textarea class="form-control" rows="5" id="notes" ng-model="paciente.alerta"></textarea>   
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div ng-controller="visitasPacienteCtrl" id="modals"> 
+        <div ng-repeat="visita in visitas" >
+            <div class="modal fade" id="visitaModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title" id="myModalLabel">VISITA</h4>
+                        </div>
+                        <div class="col-md-12">
+
+                            <form role="form" id="templatemo-lavisita-form_1">
+                                <div class="row">
+                                    <div class="col-md-3 margin-bottom-15">
+                            
+                                        <label>Fecha visita</label><br>
+                                        <ng-datepicker ng-model="visitas[$index].fecha" view-format="D MMMM YYYY" first-week-day-sunday="false" locale="es"></ng-datepicker>
+                                    </div>
+                                    <div class="col-md-12 margin-bottom-15">
+                                        <label>Notas</label>
+                                        <textarea class="form-control" rows="5" id="notes" ng-model="visitas[$index].comentario"></textarea>   
+                                    </div>
+                                    <div class="col-md-12 margin-bottom-15">
+                                        <label>Diagnóstico</label>
+                                        <textarea class="form-control" rows="10" id="notes" ng-model="visitas[$index].diagnostico"></textarea>   
+                                    </div>
+
+                                </div>
+                            </form>
+
+                        </div>
+                        <div class="modal-footer">
+                            
+<!--                            <a ng-click="getReportVisita()" href="" class="btn btn-default">
+                                <span class="glyphicon glyphicon-print"></span>
+                            </a>-->
+                            <button type="button" class="btn btn-primary" aria-label="Left Align" ng-click="updateVisita($index)">
+                                Guardar
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

@@ -1,0 +1,78 @@
+<div  ng-controller="medicosCtrl">
+    <div class="alert alert-danger fade in" ng-show="errorUpdateMedico">
+        <a class="close" ng-click="showErrorUpdateMedico()">&times;</a>
+        <strong>Error!</strong> A problem has been occurred while submitting your data.
+    </div>
+    <div class="alert alert-success fade in" ng-show="okUpdateMedico">
+        <a class="close" ng-click="showOkUpdateMedico()">&times;</a>
+        <strong>Success!</strong> Update has been done.
+    </div>
+    <div class="table-responsive">
+        <div class="col-md-12 col-sm-12 margin-bottom-30" ng-show="!isShowingDetail">
+            <br>
+            <div>
+                <a href="" ng-click="insertMedico()" data-toggle="modal" data-target="#visitaModal"><i class="fa fa-plus-square-o"> Añadir médico</i></a>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">MEDICOS {{medicos[0].id}}</div>
+                <div class="panel-body">
+
+                    <table class="table table-striped" data-pagination="true" ng-model="medicos">
+                        <thead>
+                            <tr>
+                                <th>ID. MÉDICO</th>
+                                <th>NOMBRE</th>
+                                <th>APELLIDOS</th>
+                                <th></th>
+                            </tr>
+                        </thead> 
+                        <tbody>
+                            <tr ng-repeat="medico in medicos">
+                                <td>{{medico.ID}}</td>
+                                <td>{{medico.NOMBRE}}</td>
+                                <td>{{medico.APELLIDOS}}</td>
+                                <td>
+                                    <button type="button" data-toggle="modal" class="btn btn-default" aria-label="Left Align" ng-click="getMedico(medico.ID)">
+                                        <span class="glyphicon glyphicon-eye-open"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>  
+        <div class="col-md-12 col-sm-12 margin-bottom-30" ng-show="isShowingDetail">
+            <div class="row">
+
+                    <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="updateMedico()">
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </button>
+                    <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="closeMedico()">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                    <hr>
+
+            </div>
+            <div class="row">
+                <form role="form" id="templatemo-lavisita-form_1">
+
+                        <div class="col-md-3 margin-bottom-15">
+                            <label>Nombre</label><br>
+                            <input type="text" class="form-control" id="name" ng-model="medicos[idMedico].NOMBRE"> 
+                        </div>
+                        <div class="col-md-4 margin-bottom-15">
+                            <label>Apellidos</label>
+                            <input type="text" class="form-control" id="surname" ng-model="medicos[idMedico].APELLIDOS"> 
+                        </div>
+                        <div class="col-md-4 margin-bottom-15">
+                            <label>Colegiado</label>
+                            <input type="text" class="form-control" id="colegiado" ng-model="medicos[idMedico].NUMERO_COLEGIADO">   
+                        </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+<div ng-controller="detalleVisitaCtrl" >
+    
+    <!--    capas de información de error o acierto updateando info de pacientes-->
+    <div class="alert alert-danger fade in" ng-show="errorUpdatePaciente">
+        <a class="close" ng-click="showErrorUpdatePaciente()">&times;</a>
+        <strong>Error!</strong> A problem has been occurred while submitting your data.
+    </div>
+    <div class="alert alert-success fade in" ng-show="okUpdatePaciente">
+        <a class="close" ng-click="showOkUpdatePaciente()">&times;</a>
+        <strong>Success!</strong> Update has been done.
+    </div>
+    
+</div>
